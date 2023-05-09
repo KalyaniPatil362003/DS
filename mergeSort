@@ -1,0 +1,90 @@
+#include<iostream>
+using namespace std;
+
+class Merge
+{
+private:
+    int b[40],k,j,i;
+
+public:
+
+    void divided(int a[],int lb,int ub);
+    void merge(int a[],int lb,int mid,int ub);
+};
+
+void Merge:: divided(int a[],int lb,int ub)
+{
+    if(lb<ub)
+    {
+        int mid=(lb+ub)/2;
+
+        divided(a,lb,mid);
+        divided (a,mid+1,ub);
+
+        merge(a,lb,mid,ub);
+    }
+}
+
+void Merge:: merge(int a[],int lb,int mid,int ub)
+{
+    i=lb;
+    j=mid+1;
+    k=lb;
+
+    while (i<=mid && j<=ub)
+    {
+        if(a[i]>=a[j])
+        {
+            b[k]=a[j];
+            k++;
+            j++;
+        }
+        else
+        {
+            b[k]=a[i];
+            k++;
+            i++;
+        }
+
+    }
+    while(i<=mid)
+    {
+        b[k]=a[i];
+        k++;
+        i++;
+    }
+    while(j<=ub)
+    {
+        b[k]=a[j];
+        k++;
+        j++;
+    }
+    for(i=lb; i<=ub; i++)
+    {
+        a[i]=b[i];
+    }
+}
+int main()
+{
+    int a[40],n,i;
+    Merge m;
+
+    cout<<"Enter the size of array:- ";
+    cin>>n;
+
+    cout<<"Enter the elements:- ";
+    for(i=0; i<n; i++)
+    {
+        cin>>a[i];
+    }
+
+    m.divided(a,0,n-1);
+
+    cout<<"Sorted array is:- ";
+    for(i=0; i<n; i++)
+    {
+        cout<<a[i]<<endl;
+    }
+
+    return 0;
+}
